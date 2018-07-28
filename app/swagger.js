@@ -6,25 +6,25 @@ module.exports = app => {
     info: {
       title: 'Image transformer API',
       version: '1.0.0',
-      description: 'Image transformer API',
+      description: 'Image transformer API'
     },
     host: 'localhost:3000',
-    basePath: '/',
+    basePath: '/'
   };
 
   // options for the swagger docs
   const options = {
     // import swaggerDefinitions
-    swaggerDefinition: swaggerDefinition,
+    swaggerDefinition,
     // path to the API docs
-    apis: ['./**/routes/*.js', 'index.js'],
+    apis: [ './**/routes/*.js', 'index.js' ]
   };
 
   // initialize swagger-jsdoc
   const swaggerSpec = swaggerJSDoc(options);
 
   // serve swagger
-  app.get('/swagger.json', function (req, res) {
+  app.get('/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
   });
