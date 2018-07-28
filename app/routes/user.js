@@ -4,25 +4,19 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/users/:
  *   get:
  *     tags:
  *       - users
- *     description: Deletes a single user
+ *     description: Get a single user
  *     produces:
  *       - application/json
- *     parameters:
- *       - name: id
- *         description: user's id
- *         in: path
- *         required: true
- *         type: integer
  *     responses:
  *       200:
- *         description: Successfully deleted
+ *         description: Get a single user
  */
 router.get('/', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json([]);
 });
 
 module.exports = router;

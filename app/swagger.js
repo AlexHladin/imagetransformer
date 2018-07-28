@@ -17,7 +17,7 @@ module.exports = app => {
     // import swaggerDefinitions
     swaggerDefinition: swaggerDefinition,
     // path to the API docs
-    apis: ['./routes/*.js','index.js'],
+    apis: ['./**/routes/*.js', 'index.js'],
   };
 
   // initialize swagger-jsdoc
