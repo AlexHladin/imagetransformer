@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./mongo-data:/var/lib/mongo/data
+    ports:
+      - 27017:27017
