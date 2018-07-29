@@ -8,8 +8,7 @@ const mongo = require('./app/mongoose');
 
 const app = express();
 
-middleware(app, routes);
-swagger(app);
+middleware(app, routes, swagger);
 mongo();
 
 module.exports = app;

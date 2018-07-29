@@ -9,7 +9,39 @@ const ApiError = require('../errors/ApiError');
 const errors = require('../errors/errors');
 
 const router = express.Router();
+/**
+ * @swagger
+ * definition:
+ *   user:
+ *     properties:
+ *       email:
+ *         type: string
+ *       password:
+ *         type: string
+ */
 
+/**
+ * @swagger
+ * /api/auth/signin:
+ *   post:
+ *     tags:
+ *       - auth
+ *     description: Signin user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: user object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/user'
+ *     responses:
+ *       200:
+ *         description: Signin user
+ *       400:
+ *         description: User not exist
+ */
 router.post('/signin', (req, res, next) => {
   if (!req.body.hasOwnProperty('email') || !validator.isEmail(req.body.email) ||
     !req.body.hasOwnProperty('password') || !validator.isLength(req.body.password, { min: 3, max: 50 })) {
@@ -21,9 +53,7 @@ router.post('/signin', (req, res, next) => {
       return next(new ApiError(errors.INTERNAL_SERVER_ERROR));
     }
 
-    const passwordHash = bcrypt.hashSync(req.body.password);
-
-    if (user.length === 0 || bcrypt.compareSync(user[0].password, passwordHash)) {
+    if (user.length === 0 || !bcrypt.compareSync(req.body.password, user[0].password)) {
       return next(new ApiError(errors.USER_NOT_EXIST));
     }
 
@@ -32,6 +62,28 @@ router.post('/signin', (req, res, next) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/auth/signup:
+ *   post:
+ *     tags:
+ *       - auth
+ *     description: Signup user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: user object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/user'
+ *     responses:
+ *       200:
+ *         description: Signup user
+ *       400:
+ *         description: User already exist
+ */
 router.post('/signup', (req, res, next) => {
   if (!req.body.hasOwnProperty('email') || !validator.isEmail(req.body.email) ||
     !req.body.hasOwnProperty('password') || !validator.isLength(req.body.password, { min: 3, max: 50 })) {
