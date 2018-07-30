@@ -12,7 +12,7 @@ const apiErrorMiddleware = (err, req, res, next) => {
     return res.status(err.responseCode).json(err.response);
   }
 
-  return next(err);
+  next(err);
 };
 
 const lastErrorMiddleware = (req, res) => {
@@ -26,10 +26,10 @@ const lastErrorMiddleware = (req, res) => {
 };
 
 const notFoundMiddleware = (req, res) => {
-  const err = new ApiError(errors.NOT_FOUND);
+  const error = new ApiError(errors.NOT_FOUND);
   res
-    .status(err.responseCode)
-    .json(err.response);
+    .status(error.responseCode)
+    .json(error.response);
 };
 
 module.exports = (app, routes, swagger) => {

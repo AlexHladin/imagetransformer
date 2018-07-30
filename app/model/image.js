@@ -4,6 +4,11 @@ const ImageSchema = mongoose.Schema({
   img: {
     data: Buffer,
     contentType: String
+  },
+  width: {
+    type: Number,
+    min: 1,
+    max: 100000
   }
 });
 
