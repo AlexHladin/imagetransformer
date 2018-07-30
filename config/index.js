@@ -7,5 +7,6 @@ module.exports = {
   },
   session: {
     secret: 'asdno98asd9asnd&BHsd'
-  }
+  },
+  uploadDir: '/uploads/image'
 };
