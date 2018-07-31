@@ -1,36 +1,29 @@
 const passport = require('passport');
 const { ExtractJwt, Strategy: JwtStrategy } = require('passport-jwt');
+const _ = require('lodash');
+
 const config = require('../../config');
-// const db = require('../models');
+const User = require('../model/user');
 
 passport.serializeUser((user, done) => done(null, user || false));
-
-passport.deserializeUser(async ({ id }, done) => {
-  console.log(id);
-  /* let user = await db.User.find({where: {id}});
-  if (user) {
-      return done(null, {...user.get(), role});
-  }
-  return done(null, false); */
-});
 
 passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: config.session.secret
-}, async (jwt, done) => {
+}, (jwt, done) => {
   try {
-    done(null, { id: jwt.sub, role: jwt.role });
+    User.find({ _id: jwt.id }, (err, user) => {
+      if (err) {
+        throw err;
+      }
+
+      done(null, _.first(user));
+    });
   } catch (err) {
     done(err, false);
   }
 }));
 
 const isAuthenticated = passport.authenticate('jwt', { session: false });
-const isAuthorized = (action, resource) => [
-  isAuthenticated,
-  (req, res, next) => {
-    console.log(res);
-  }
-];
 
-module.exports = { passport, isAuthenticated, isAuthorized };
+module.exports = { passport, isAuthenticated };

@@ -21,28 +21,28 @@ describe('Users', () => {
       };
 
       chai.request(app)
-          .post('/api/auth/signup')
-          .send(user)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('authToken');
+        .post('/api/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('authToken');
 
-            done();
-          });
+          done();
+        });
     });
 
     it('it should not signup user', done => {
       chai.request(app)
-          .post('/api/auth/signup')
-          .send({})
-          .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            res.body.should.have.property('message');
+        .post('/api/auth/signup')
+        .send({})
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
 
-            done();
-          });
+          done();
+        });
     });
   });
 
@@ -57,15 +57,15 @@ describe('Users', () => {
       };
 
       chai.request(app)
-          .post('/api/auth/signin')
-          .send(user)
-          .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            res.body.should.have.property('message');
+        .post('/api/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
 
-            done();
-          });
+          done();
+        });
     });
 
     /*
@@ -77,27 +77,25 @@ describe('Users', () => {
         email: `${random()}@${random()}.${random(3)}`
       };
 
-      console.log(user);
-
       chai.request(app)
-          .post('/api/auth/signup')
-          .send(user)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('authToken');
+        .post('/api/auth/signup')
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('authToken');
 
-            chai.request(app)
-                .post('/api/auth/signin')
-                .send(user)
-                .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-                  res.body.should.have.property('authToken');
+          chai.request(app)
+            .post('/api/auth/signin')
+            .send(user)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('authToken');
 
-                  done();
-                });
-          });
+              done();
+            });
+        });
     });
   });
 });

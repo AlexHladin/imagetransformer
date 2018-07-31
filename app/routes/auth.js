@@ -9,6 +9,7 @@ const ApiError = require('../errors/ApiError');
 const errors = require('../errors/errors');
 
 const router = express.Router();
+
 /**
  * @swagger
  * definition:

@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const express = require('express');
 
+const config = require('../config');
 const { passport } = require('./auth');
 const errors = require('./errors/errors');
 const ApiError = require('./errors/ApiError');
@@ -12,10 +13,10 @@ const apiErrorMiddleware = (err, req, res, next) => {
     return res.status(err.responseCode).json(err.response);
   }
 
-  return next(err);
+  next(err);
 };
 
-const lastErrorMiddleware = (req, res) => {
+const lastErrorMiddleware = (err, req, res, next) => {
   res
     .status(errors.INTERNAL_SERVER_ERROR.responseCode)
     .send({
@@ -25,11 +26,11 @@ const lastErrorMiddleware = (req, res) => {
     });
 };
 
-const notFoundMiddleware = (req, res) => {
-  const err = new ApiError(errors.NOT_FOUND);
+const notFoundMiddleware = (err, req, res, next) => {
+  const error = new ApiError(errors.NOT_FOUND);
   res
-    .status(err.responseCode)
-    .json(err.response);
+    .status(error.responseCode)
+    .json(error.response);
 };
 
 module.exports = (app, routes, swagger) => {

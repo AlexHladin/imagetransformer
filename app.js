@@ -1,5 +1,4 @@
 const express = require('express');
-const createError = require('http-errors');
 
 const middleware = require('./app/middleware');
 const swagger = require('./app/swagger');
