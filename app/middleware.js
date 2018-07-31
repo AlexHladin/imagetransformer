@@ -15,7 +15,7 @@ const apiErrorMiddleware = (err, req, res, next) => {
   next(err);
 };
 
-const lastErrorMiddleware = (req, res) => {
+const lastErrorMiddleware = (err, req, res, next) => {
   res
     .status(errors.INTERNAL_SERVER_ERROR.responseCode)
     .send({
@@ -25,7 +25,7 @@ const lastErrorMiddleware = (req, res) => {
     });
 };
 
-const notFoundMiddleware = (req, res) => {
+const notFoundMiddleware = (err, req, res, next) => {
   const error = new ApiError(errors.NOT_FOUND);
   res
     .status(error.responseCode)
