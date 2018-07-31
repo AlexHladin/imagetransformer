@@ -11,6 +11,19 @@ const upload = multer({ storage });
 
 /**
  * @swagger
+ * definition:
+ *   image:
+ *     properties:
+ *       img:
+ *         type: Object
+ *       width:
+ *         type: Number
+ *       height:
+ *         type: Number
+ */
+
+/**
+ * @swagger
  * /api/image/:
  *   get:
  *     tags:
