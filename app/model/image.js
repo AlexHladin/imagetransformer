@@ -9,6 +9,11 @@ const ImageSchema = mongoose.Schema({
     type: Number,
     min: 1,
     max: 100000
+  },
+  height: {
+    type: Number,
+    min: 1,
+    max: 100000
   }
 });
 

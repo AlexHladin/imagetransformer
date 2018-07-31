@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const express = require('express');
 
+const config = require('../config');
 const { passport } = require('./auth');
 const errors = require('./errors/errors');
 const ApiError = require('./errors/ApiError');
