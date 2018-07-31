@@ -15,6 +15,14 @@ module.exports = Object.freeze({
     responseCode: 404,
     message: 'Image not exist'
   },
+  INVALID_IMAGE_SIZE: {
+    responseCode: 406,
+    message: 'Invalid image'
+  },
+  INVALID_ID: {
+    responseCode: 405,
+    message: 'Invalid id'
+  },
   NOT_FOUND: {
     responseCode: 404,
     message: 'Not found'

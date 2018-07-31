@@ -77,8 +77,6 @@ describe('Users', () => {
         email: `${random()}@${random()}.${random(3)}`
       };
 
-      console.log(user);
-
       chai.request(app)
         .post('/api/auth/signup')
         .send(user)
