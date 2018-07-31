@@ -1,16 +1,13 @@
-const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
-const { promisify } = require('util');
 const validator = require('validator');
+const _ = require('lodash');
 
 const config = require('../../config');
 const User = require('../model/user');
 const Image = require('../model/image');
 const errors = require('../errors/errors');
 const ApiError = require('../errors/ApiError');
-
-const writeFile = promisify(fs.writeFile);
 
 const saveImage = (imageSource, width, height) => {
   const image = new Image();
@@ -27,7 +24,8 @@ module.exports = {
     _id: {
       $in: user.images
     }
-  }),
+  }, { width: true, height: true, _id: true }),
+
   transform: async (image, transformParam, user) => {
     if (!validator.isInt(transformParam.width) || !validator.isInt(transformParam.height)) {
       throw new ApiError(errors.INVALID_DATA);
@@ -50,11 +48,6 @@ module.exports = {
       saveImage(transformedImage, width, height)
     ]);
 
-    await Promise.all([
-      writeFile(path.join(config.uploadDir, originalImageInstance.id + ext), image.buffer),
-      writeFile(path.join(config.uploadDir, transformedImageInstance.id + ext), transformedImage)
-    ]);
-
     await User.update({ _id: user.id }, {
       $push: {
         images: [ originalImageInstance.id, transformedImageInstance.id ]
@@ -65,5 +58,15 @@ module.exports = {
       originalImageId: originalImageInstance.id,
       transformedImageId: transformedImageInstance.id
     };
+  },
+
+  getImage: async (params) => {
+    const image = await Image.find({ _id: params.id });
+
+    if (!image.length) {
+      throw new ApiError(errors.IMAGE_NOT_EXIST);
+    }
+
+    return _.first(image);
   }
 };

@@ -11,6 +11,10 @@ module.exports = Object.freeze({
     responseCode: 400,
     message: 'User not exist'
   },
+  IMAGE_NOT_EXIST: {
+    responseCode: 404,
+    message: 'Image not exist'
+  },
   NOT_FOUND: {
     responseCode: 404,
     message: 'Not found'
